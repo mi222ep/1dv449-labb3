@@ -21,6 +21,17 @@
         accessToken: 'pk.eyJ1IjoiamFsbWEiLCJhIjoiY2lpNjN1d3RyMDA2bHZ3bTNmMTVhZ2RscyJ9.N-JYQ1IMDNJ3b4xIymdonA'
     }).addTo(map);
     var marker = L.marker([51.5, -0.09]).addTo(map);
+
+    var url = "http://api.sr.se/api/v2/traffic/messages?page=11";
+    function reqListener () {
+        console.log(this.responseText);
+    }
+
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", reqListener);
+    oReq.open("GET", url);
+    oReq.send();
+
 </script>
 </body>
 </html>
