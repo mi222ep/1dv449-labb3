@@ -22,9 +22,11 @@
     }).addTo(map);
     var marker = L.marker([51.5, -0.09]).addTo(map);
 
-    var url = "http://api.sr.se/api/v2/traffic/messages?page=11";
+    var url = "http://api.sr.se/api/v2/traffic/messages";
     function reqListener () {
-        console.log(this.responseText);
+        console.log(this.responseXML);
+        var xml = this.responseXML.getElementsByTagName("page");
+        console.log(xml);
     }
 
     var oReq = new XMLHttpRequest();
