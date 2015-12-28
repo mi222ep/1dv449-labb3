@@ -24,11 +24,24 @@
     var url = "http://api.sr.se/api/v2/traffic/messages";
     function reqListener () {
         console.log(this.responseXML);
-        var long = this.responseXML.getElementsByTagName("longitude");
-        var lat = this.responseXML.getElementsByTagName("latitude");
-        for (i = 0; i < long.length; i++) {
-            var marker = L.marker([lat.item(i).firstChild.data, long.item(i).firstChild.data]).addTo(map);
-            marker.bindPopup("hello" + i);
+        var messages  = this.responseXML.getElementsByTagName("message");
+        var messageObjects = new Array();
+        for(i = 0; i < messages.length; i++){
+            var message = {
+                priority:i,
+                //exactlocation:messages.item(i).childNodes[5].childNodes[0].data,
+                description:messages.item(i).childNodes[7].childNodes[0].data,
+                lat:messages.item(i).childNodes[9].childNodes[0].data,
+                long:messages.item(i).childNodes[11].childNodes[0].data,
+                category:messages.item(i).childNodes[15].childNodes[0].data
+            };
+            console.log(messages.item(i));
+            messageObjects.push(message);
+        }
+
+        for (i = 0; i < messageObjects.length; i++) {
+            var marker = L.marker([messageObjects[i].lat, messageObjects[i].long]).addTo(map);
+            marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2>" + messageObjects[i].description);
         }
     }
 
