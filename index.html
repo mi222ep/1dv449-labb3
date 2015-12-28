@@ -28,6 +28,7 @@
         var lat = this.responseXML.getElementsByTagName("latitude");
         for (i = 0; i < long.length; i++) {
             var marker = L.marker([lat.item(i).firstChild.data, long.item(i).firstChild.data]).addTo(map);
+            marker.bindPopup("hello" + i);
         }
     }
 
