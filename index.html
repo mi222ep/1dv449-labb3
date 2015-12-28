@@ -20,13 +20,17 @@
         id: 'jalma.oe4kdjb8',
         accessToken: 'pk.eyJ1IjoiamFsbWEiLCJhIjoiY2lpNjN1d3RyMDA2bHZ3bTNmMTVhZ2RscyJ9.N-JYQ1IMDNJ3b4xIymdonA'
     }).addTo(map);
-    var marker = L.marker([51.5, -0.09]).addTo(map);
 
     var url = "http://api.sr.se/api/v2/traffic/messages";
     function reqListener () {
         console.log(this.responseXML);
-        var xml = this.responseXML.getElementsByTagName("page");
-        console.log(xml);
+        var long = this.responseXML.getElementsByTagName("longitude");
+        var lat = this.responseXML.getElementsByTagName("latitude");
+        for (i = 0; i < long.length; i++) {
+            console.log(i);
+            var marker = L.marker([lat.item(i).firstChild.data, long.item(i).firstChild.data]).addTo(map);
+        }
+        console.log(lat.item(1).firstChild.data);
     }
 
     var oReq = new XMLHttpRequest();
