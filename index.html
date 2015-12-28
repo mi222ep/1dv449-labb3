@@ -27,10 +27,8 @@
         var long = this.responseXML.getElementsByTagName("longitude");
         var lat = this.responseXML.getElementsByTagName("latitude");
         for (i = 0; i < long.length; i++) {
-            console.log(i);
             var marker = L.marker([lat.item(i).firstChild.data, long.item(i).firstChild.data]).addTo(map);
         }
-        console.log(lat.item(1).firstChild.data);
     }
 
     var oReq = new XMLHttpRequest();
