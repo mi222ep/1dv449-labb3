@@ -55,13 +55,25 @@ function reqListener () {
 
     var messages  = this.responseXML.getElementsByTagName("message");
     for(i = 0; i < messages.length; i++){
+        if(messages.item(i).childNodes[5].childNodes[0] == null){
+            var exlocat = null;
+            console.log("Ingen exakt lokation");
+            }
+        else{
+            exlocat = messages.item(i).childNodes[5].childNodes[0].data;
+        }
+        var desc = messages.item(i).childNodes[7].childNodes[0].data;
+        var latitude = messages.item(i).childNodes[9].childNodes[0].data;
+        var longitude = messages.item(i).childNodes[11].childNodes[0].data;
+        var cat = messages.item(i).childNodes[15].childNodes[0].data;
+
         var message = {
             priority:i,
-            //exactlocation:messages.item(i).childNodes[5].childNodes[0].data,
-            description:messages.item(i).childNodes[7].childNodes[0].data,
-            lat:messages.item(i).childNodes[9].childNodes[0].data,
-            long:messages.item(i).childNodes[11].childNodes[0].data,
-            category:messages.item(i).childNodes[15].childNodes[0].data
+            exactlocation:exlocat,
+            description: desc,
+            lat: latitude,
+            long: longitude,
+            category: cat
         };
         messageObjects.push(message);
     }
@@ -74,9 +86,15 @@ function reqListener () {
     }
 }
 function printMessagesToMap(){
+    console.log(messageObjects);
 for (i = 0; i < messageObjects.length; i++) {
     var marker = L.marker([messageObjects[i].lat, messageObjects[i].long]).addTo(map);
-    marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2>" + messageObjects[i].description);
+    if(messageObjects[i].exactlocation == null){
+        marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2>" + messageObjects[i].description);
+    }
+    else{
+        marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2><h3>"+ messageObjects[i].exactlocation +"</h3>" + messageObjects[i].description);
+    }
 }
 }
 function setInfo(message){
