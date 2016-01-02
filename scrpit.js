@@ -1,7 +1,26 @@
 var map = setUpMap();
 var messageObjects = [];
 getAllMessages();
+var movingDiv = false;
+document.getElementById("information").onmousedown=function(){
+    movingDiv = true;
+    document.onmousemove = readMouseMove;
+};
+document.getElementById("information").onmouseup=function(){
+   movingDiv = false;
+};
+function readMouseMove(e){
+    if(movingDiv){
 
+        var result_x = document.getElementById('x_result');
+        var result_y = document.getElementById('y_result');
+        document.getElementById("information").style.top =  e.clientY - 10 +"px";
+        document.getElementById("information").style.left = e.clientX - 10 +"px";
+        document.getElementById("information").style.backgroundColor = "red";
+        result_x.innerHTML = e.clientX;
+        result_y.innerHTML = e.clientY;
+    }
+}
 function setUpMap(){
     var map = L.map('map').setView([59.3294, 18.0686], 5);
     L.tileLayer('https://api.tiles.mapbox.com/v4/jalma.oe4kdjb8/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamFsbWEiLCJhIjoiY2lpNjN1d3RyMDA2bHZ3bTNmMTVhZ2RscyJ9.N-JYQ1IMDNJ3b4xIymdonA', {
@@ -49,11 +68,20 @@ function reqListener () {
     if(thisPage != totalPages){
         getMessages(nextPage);
     }
-    printMessagesToMap();
+    else{
+        setInfo("Information loaded sucessfully");
+        printMessagesToMap();
+    }
 }
 function printMessagesToMap(){
 for (i = 0; i < messageObjects.length; i++) {
     var marker = L.marker([messageObjects[i].lat, messageObjects[i].long]).addTo(map);
     marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2>" + messageObjects[i].description);
 }
+}
+function setInfo(message){
+    var p = document.createElement("P");
+    var infoText = document.createTextNode(message);
+    p.appendChild(infoText);
+    document.getElementById("information").appendChild(p);
 }
