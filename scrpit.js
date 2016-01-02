@@ -23,16 +23,18 @@ function getMessages(url){
     oReq.send();
 }
 function reqListener () {
-    var pages = this.responseXML.getElementsByTagName("page");
-    var totalPages = this.responseXML.getElementsByTagName("totalpages");
-    var nextPage = this.responseXML.getElementsByTagName("nextpage");
-    console.log(pages.item(0).childNodes[0].data);
-    if(pages.item(0).childNodes[0].data){
+    var thisPage = this.responseXML.getElementsByTagName("page");
+    thisPage = thisPage.item(0).childNodes[0].data;
 
-        //getAllMessages(nextPage.item(0).childNodes[0].data);
+    var totalPages = this.responseXML.getElementsByTagName("totalpages");
+    totalPages = totalPages.item(0).childNodes[0].data;
+
+    var nextPage = this.responseXML.getElementsByTagName("nextpage");
+    if(nextPage.item(0) != null){
+        nextPage = nextPage.item(0).childNodes[0].data;
     }
+
     var messages  = this.responseXML.getElementsByTagName("message");
-    console.log(messages);
     for(i = 0; i < messages.length; i++){
         var message = {
             priority:i,
@@ -43,12 +45,13 @@ function reqListener () {
             category:messages.item(i).childNodes[15].childNodes[0].data
         };
         messageObjects.push(message);
-        console.log(messageObjects);
+    }
+    if(thisPage != totalPages){
+        getMessages(nextPage);
     }
     printMessagesToMap();
 }
 function printMessagesToMap(){
-    console.log(messageObjects);
 for (i = 0; i < messageObjects.length; i++) {
     var marker = L.marker([messageObjects[i].lat, messageObjects[i].long]).addTo(map);
     marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2>" + messageObjects[i].description);
