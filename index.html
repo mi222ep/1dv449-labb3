@@ -12,44 +12,7 @@
 </head>
 <body>
 <div id="map"></div>
-<script>
-    var map = L.map('map').setView([59.3294, 18.0686], 5);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/jalma.oe4kdjb8/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamFsbWEiLCJhIjoiY2lpNjN1d3RyMDA2bHZ3bTNmMTVhZ2RscyJ9.N-JYQ1IMDNJ3b4xIymdonA', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'jalma.oe4kdjb8',
-        accessToken: 'pk.eyJ1IjoiamFsbWEiLCJhIjoiY2lpNjN1d3RyMDA2bHZ3bTNmMTVhZ2RscyJ9.N-JYQ1IMDNJ3b4xIymdonA'
-    }).addTo(map);
-
-    var url = "http://api.sr.se/api/v2/traffic/messages";
-    function reqListener () {
-        console.log(this.responseXML);
-        var messages  = this.responseXML.getElementsByTagName("message");
-        var messageObjects = new Array();
-        for(i = 0; i < messages.length; i++){
-            var message = {
-                priority:i,
-                //exactlocation:messages.item(i).childNodes[5].childNodes[0].data,
-                description:messages.item(i).childNodes[7].childNodes[0].data,
-                lat:messages.item(i).childNodes[9].childNodes[0].data,
-                long:messages.item(i).childNodes[11].childNodes[0].data,
-                category:messages.item(i).childNodes[15].childNodes[0].data
-            };
-            console.log(messages.item(i));
-            messageObjects.push(message);
-        }
-
-        for (i = 0; i < messageObjects.length; i++) {
-            var marker = L.marker([messageObjects[i].lat, messageObjects[i].long]).addTo(map);
-            marker.bindPopup("<h2>"+ messageObjects[i].category + "</h2>" + messageObjects[i].description);
-        }
-    }
-
-    var oReq = new XMLHttpRequest();
-    oReq.addEventListener("load", reqListener);
-    oReq.open("GET", url);
-    oReq.send();
-
+<script src="scrpit.js">
 </script>
 </body>
 </html>
