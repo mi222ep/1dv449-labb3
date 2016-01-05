@@ -35,14 +35,38 @@ function setUpMap(){
     return map;
 }
 function getAllMessages(){
-    var url = "http://api.sr.se/api/v2/traffic/messages";
-    getMessages(url);
+    var url = "http://api.sr.se/api/v2/traffic/messages?format=json";
+    getJson(url);
 }
 function getMessages(url){
     var oReq = new XMLHttpRequest();
     oReq.addEventListener("load", reqListener);
     oReq.open("GET", url);
     oReq.send();
+}
+function getJson(url){
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("progress", updateProgress);
+    oReq.addEventListener("load", function(){
+        console.log(this.response);
+        parseJson(this.response);
+
+    });
+    oReq.open("GET", url);
+    oReq.send();
+}
+function parseJson(j){
+    console.log(JSON.parse(j));
+    var i = JSON.parse(j);
+    console.log(i.messages[2]);
+}
+function updateProgress(oEvent){
+    if (oEvent.lengthComputable) {
+        var percentComplete = oEvent.loaded / oEvent.total;
+        setInfo("Laddar sida" + percentComplete + "%");
+    } else {
+        setInfo("Laddar sida");
+    }
 }
 function reqListener () {
     var thisPage = this.responseXML.getElementsByTagName("page");
