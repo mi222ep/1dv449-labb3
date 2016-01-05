@@ -101,5 +101,5 @@ function setInfo(message){
     var p = document.createElement("P");
     var infoText = document.createTextNode(message);
     p.appendChild(infoText);
-    document.getElementById("information").appendChild(p);
+    document.getElementById("info_infospace").appendChild(p);
 }

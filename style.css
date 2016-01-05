@@ -4,6 +4,32 @@ body { margin:0; padding:0; }
     position: absolute;
     top: 0;
     left: 100px;
-    background-color: grey;
     z-index:1000;
+    width: 200px;
+}
+#info_toolbar{
+    width: 100%;
+    height: 50px;
+    background-color: blue;
+    position: absolute;
+    top: 0;
+}
+#info_minimize{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 2px solid black;
+    background-color: black;
+    color: red;
+}
+#info_infospace{
+    position: absolute;
+    top: 50px;
+    min-height: 200px;
+    max-height: 400px;
+    width: 100%;
+    overflow: scroll;
+    background-color: gray;
 }
