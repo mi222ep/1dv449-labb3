@@ -9,6 +9,9 @@ document.getElementById("information").onmousedown=function(){
 document.getElementById("information").onmouseup=function(){
    movingDiv = false;
 };
+document.getElementById("info_minimize").onmousedown = function(){
+    document.getElementById("info_infospace").classList.toggle("info_infospace_invicible");
+};
 function readMouseMove(e){
     if(movingDiv){
 

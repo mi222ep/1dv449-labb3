@@ -33,3 +33,6 @@ body { margin:0; padding:0; }
     overflow: scroll;
     background-color: gray;
 }
+.info_infospace_invicible{
+    display: none;
+}
